@@ -1,0 +1,132 @@
+import time
+from numpy.random import seed
+from numpy.random import randint
+import matplotlib.pylot as plt
+
+def MergSort(ar):
+    if len(ar)>1:
+        r=len(ar)/2
+        L=ar[:r]
+        M=ar[r:]
+
+        MergSort(L)
+        MergSort(M)
+        i=j=k=0
+        while i<len(L) and j<len(M):
+            if L[i]<M[j]:
+                ar[k]=L[i]
+                i=i+1
+            else:
+                ar[k]=M[j]
+                j=j+1
+                k+=1
+                while j<len(M):
+                    ar[k]=M[j]
+                    j+=1
+                    k+=1
+
+def printlist(ar):
+    for i in range(len(ar)):
+        print(ar[i],end=" ")
+        print()
+
+if __name__=='_main_':
+    ar=[6,5,12,10,9,1]
+    MergSort(ar)
+print("Sorted array")
+printlist(ar)
+
+def partition(ar,low,high):
+    prioat=ar[high]
+    i=low-1
+    for j in range(low,high):
+        if ar[j]<=priot:
+            i=i+1
+            (ar[i],ar[high])=(ar[j],ar[i])
+            (ar[i+1],ar[high])=(ar[high],ar[i+1])
+            return i+1
+
+def QuickSort(ar,low,high):
+    if low<high:
+        p1=partion(ar,low,high)
+        QuickSort(ar,low,p1-1)
+        QuickSort(ar,p1+1,high)
+    data=[8,7,2,1,0,9,6]
+    print("Unsorted array")
+    print(data)
+    size=len(data)
+    QuickSort(data,0,size-1)
+    print("Sorted array at a ascending")
+    print(data)
+
+def selectionsort(ar,size):
+    for step in range(size):
+        min_index=step
+        for i in range(step+1,size):
+            if ar[i]<ar[min_index]:
+                min_index=i
+                (ar[step],ar[min_index])=(ar[min_index],ar[step])
+                data=[-2,45,0,11,-9]
+                size=len(data)
+                selectionsort(data,size)
+                print("Sorted in ascending")
+                print(data)
+
+def readInput():
+    a=[]
+    n=int(input("Enter the number of TV channels"))
+    print("Enter the no of viewers")
+    for i in range(0,n):
+        l=int(input)
+        a.append(l)
+    return 0
+ele=list()
+time=list()
+print("1.Merge sort 2.Quick sort 3.Selection Sort")
+ch=int(input("Enter the choice"))
+if ch==1:
+    ar=readInput()
+    MergSort(ar)
+    labeldata="mergeSort"
+    print("Sorted array")
+    print(ar)
+elif ch==2:
+    ar=readInput()
+    size=len(ar)
+    labeldata="Quicksort"
+
+
+
+if ch==3:
+    ar=readInput()
+    size=len(ar)
+    labeldata="Selectionsort"
+    SelectionSort(ar,size)
+    print("Sorted ARRAy")
+    print(ar)
+    print("-------------------Running Time-------------------")
+    for i in range(1,10):
+        ar=randint(0,1000*i,1000*i)
+        print(i)
+        start=time.time()
+        if ch==1:
+            MergSort(ar)
+        elif ch==2:
+            size=len(ar)
+        else:
+            size=len(ar)
+            selectionsort(ar,size)
+        end=time.time()
+        print("Sorted",ar)
+        print(len(ar),"Elements sorted by",labeldata,end-start)
+        ele.append(len(ar))
+        time.append(end-start)
+        plt.xlabel("List length")
+        plt.ylabel("time complexity")
+        labeldata="sort"
+        plt.plot(ele,time,label=labeldata)
+        plt.grid()
+        plt.length()
+        plt.show()
+
+
