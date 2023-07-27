@@ -1,90 +1,76 @@
+import sys
 
-# A Huffman Tree Node
-import heapq
- 
- 
-class node:
-    def __init__(self, freq, symbol, left=None, right=None):
-        # frequency of symbol
-        self.freq = freq
- 
-        # symbol name (character)
-        self.symbol = symbol
- 
-        # node left of current node
-        self.left = left
- 
-        # node right of current node
-        self.right = right
- 
-        # tree direction (0/1)
-        self.huff = ''
- 
-    def __lt__(self, nxt):
-        return self.freq < nxt.freq
- 
- 
-# utility function to print huffman
-# codes for all symbols in the newly
-# created Huffman tree
-def printNodes(node, val=''):
- 
-    # huffman code for current node
-    newVal = val + str(node.huff)
- 
-    # if node is not an edge node
-    # then traverse inside it
-    if node.left :
-        printNodes(node.left, newVal)
-    if(node.right):
-        printNodes(node.right,newVal)
- 
-        # if node is edge node then
-        # display its huffman code
-    if(not node.left and not node.right):
-        print(f"{node.symbol} -> {newVal}")
- 
- 
-# characters for huffman tree
-chars = input("").split(' ')
- 
-# frequency of characters
-freq = [int(i) for i in input("").split(' ')]
- 
-# list containing unused nodes
-nodes = []
- 
-# converting characters and frequencies
-# into huffman tree nodes
-for x in range(len(chars)):
-    heapq.heappush(nodes, node(freq[x], chars[x]))
- 
-while len(nodes) > 1:
- 
-    # sort all the nodes in ascending order
-    # based on their frequency
-    left = heapq.heappop(nodes)
-    right = heapq.heappop(nodes)
- 
-    # assign directional value to these nodes
-    left.huff = 0
-    right.huff = 1
- 
-    # combine the 2 smallest nodes to create
-    # new node as their parent
-    newNode = node(left.freq+right.freq, left.symbol+right.symbol, left, right)
- 
-    heapq.heappush(nodes, newNode)
- 
-# Huffman Tree is ready!
-printNodes(nodes[0])
+class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = [[0 for _ in range(vertices)] for _ in range(vertices)]
 
-# OUTPUT
-# a b c d e f
-# 5 9 12 13 16 45
-# f -> 0
-# c -> 100
-# d -> 101
-# a -> 1100
-# b -> 1101
-# e -> 111
+    def add_edge(self, u, v, weight):
+        self.graph[u][v] = weight
+        self.graph[v][u] = weight
+
+    def print_mst(self, parent):
+        print("Thermal Station   --   Connected to   -->   Thermal Station   Cost")
+        for i in range(1, self.V):
+            print(f"   {i}                    --                    {parent[i]}                 {self.graph[i][parent[i]]}")
+
+    def prim_mst(self):
+        key = [sys.maxsize] * self.V
+        parent = [None] * self.V
+        key[0] = 0
+        mst_set = [False] * self.V
+
+        parent[0] = -1
+
+        for _ in range(self.V):
+            min_key = sys.maxsize
+            min_index = 0
+
+            for v in range(self.V):
+                if key[v] < min_key and not mst_set[v]:
+                    min_key = key[v]
+                    min_index = v
+
+            mst_set[min_index] = True
+
+            for v in range(self.V):
+              if self.graph[min_index][v] > 0 and not mst_set[v] and self.graph[min_index][v] < key[v]:
+                    key[v] = self.graph[min_index][v]
+                    parent[v] = min_index
+
+        self.print_mst(parent)
+
+
+# Accepting user input
+n = int(input("Enter the number of thermal power stations: "))
+g = Graph(n)
+
+print("Enter the cost of electrification for each connection:")
+for i in range(n):
+    for j in range(i+1, n):
+        cost = int(input(f"Enter the cost between thermal station {i} and {j}: "))
+        g.add_edge(i, j, cost)
+
+# Compute and display the minimum cost connection
+g.prim_mst()    
+
+
+# output
+
+# Enter the number of thermal power stations: 5
+# Enter the cost of electrification for each connection:
+# Enter the cost between thermal station 0 and 1: 1
+# Enter the cost between thermal station 0 and 2: 0
+# Enter the cost between thermal station 0 and 3: 7
+# Enter the cost between thermal station 0 and 4: 5
+# Enter the cost between thermal station 1 and 2: 2
+# Enter the cost between thermal station 1 and 3: 0
+# Enter the cost between thermal station 1 and 4: 3
+# Enter the cost between thermal station 2 and 3: 8
+# Enter the cost between thermal station 2 and 4: 4
+# Enter the cost between thermal station 3 and 4: 6
+# Thermal Station   --   Connected to   -->   Thermal Station   Cost
+#    1                    --                    0                 1
+#    2                    --                    1                 2
+#    3                    --                    4                 6
+#    4                    --                    1                 3
