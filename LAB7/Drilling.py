@@ -38,3 +38,19 @@ if __name__ == "__main__":
             "Do you want to try again with different number of node? (yes/no):").lower()
         if try_again != "yes":
             break
+# Enter th number of drill holes(nodes): 5
+# Enter the distance between node 1 and node 1: 0
+# Enter the distance between node 1 and node 2: 3
+# Enter the distance between node 1 and node 3: 1
+# Enter the distance between node 1 and node 4: 5
+# Enter the distance between node 1 and node 5: 8
+# Enter the distance between node 2 and node 1: 0
+# Enter the distance between node 2 and node 2: 0
+# Enter the distance between node 2 and node 3: 6
+# Enter the distance between node 2 and node 4: 7
+# Enter the distance between node 2 and node 5: 9
+# Enter the distance between node 3 and node 1: 0
+# Enter the distance between node 3 and node 2: 0
+# Enter the distance between node 3 and node 3: 0
+# Enter the distance between node 3 and node 4: 4
+# Enter the distance between node 3 and node 5: 
