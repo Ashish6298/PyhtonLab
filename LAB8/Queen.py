@@ -52,3 +52,19 @@ def solve_n_queen(N):
 
 N=int(input("Enter no of queens"))
 solve_n_queen(N)
+
+
+# output
+
+
+# Enter no5
+# of queens 4
+# . . Q . 
+# Q . . . 
+# . . . Q 
+# . Q . . 
+
+# . Q . . 
+# . . . Q 
+# Q . . . 
+# . . Q .
