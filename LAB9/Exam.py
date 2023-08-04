@@ -49,3 +49,11 @@ graph.add_edge('Physics', 'Biology')
 
 minimun_time_slots = graph.get_minimum_time_slots()
 print(f"Minimum time slots required: {minimun_time_slots}")
+
+
+
+
+
+# output
+
+# Minimum time slots required: 3
